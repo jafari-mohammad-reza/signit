@@ -21,7 +21,7 @@ func TestHttpServer(t *testing.T) {
 	t.Run("should call homepage and get correct response and headers", func(t *testing.T) {
 
 		routes := make(map[string]http.HandlerFunc)
-		routes["/"] = HandleHttp(func(r *http.Request) (map[string]interface{}, *HttpError) {
+		routes["/"] = HandleJson(func(r *http.Request) (map[string]interface{}, *HttpError) {
 			return map[string]interface{}{"msg": "hello"}, nil
 		})
 		httpServer := NewHttpServer(port, routes)
@@ -46,7 +46,7 @@ func TestHttpServer(t *testing.T) {
 	t.Run("should call homepage and get error with HttpError statusCode", func(t *testing.T) {
 
 		routes := make(map[string]http.HandlerFunc)
-		routes["/"] = HandleHttp(func(r *http.Request) (map[string]interface{}, *HttpError) {
+		routes["/"] = HandleJson(func(r *http.Request) (map[string]interface{}, *HttpError) {
 			return nil, &HttpError{StatusCode: 500, Message: "failed"}
 		})
 		httpServer := NewHttpServer(port, routes)

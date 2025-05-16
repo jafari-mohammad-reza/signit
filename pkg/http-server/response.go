@@ -12,7 +12,7 @@ type HttpError struct {
 	Message    string
 }
 
-func HandleHttp(method func(r *http.Request) (map[string]interface{}, *HttpError)) http.HandlerFunc {
+func HandleJson(method func(r *http.Request) (map[string]interface{}, *HttpError)) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
 		resp, httpErr := method(r)
