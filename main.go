@@ -11,7 +11,7 @@ func main() {
 		resp := map[string]interface{}{
 			"message": "hello world",
 		}
-		return resp, &httpserver.HttpError{StatusCode: 403, Message: "something went wrong"}
+		return resp, nil
 	}
 	routes["/"] = httpserver.HandleHttp(homeFunc)
 	server := httpserver.NewHttpServer(8080, routes)
