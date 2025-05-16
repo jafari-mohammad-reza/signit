@@ -1,0 +1,1 @@
+This project will be used to generate certificates and csr's and sign documents using those certificates or user uploaded certificates and also be able to verify certificate using public keys and show a document exist certificates
