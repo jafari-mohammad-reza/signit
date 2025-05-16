@@ -9,26 +9,27 @@ import (
 
 type Route map[string]http.HandlerFunc
 type HttpServer struct {
-	Port   int
-	Routes Route
+	Port    int
+	Routes  Route
+	Handler http.Handler
 }
 
 func NewHttpServer(port int, routes Route) *HttpServer {
+	mux := http.NewServeMux()
+	for route, handler := range routes {
+		mux.HandleFunc(route, handler)
+	}
 	return &HttpServer{
-		Port:   port,
-		Routes: routes,
+		Port:    port,
+		Routes:  routes,
+		Handler: mux,
 	}
 }
 
 func (h *HttpServer) Init() error {
-	mux := http.NewServeMux()
-	for route, handler := range h.Routes {
-	mux.HandleFunc(route, handler)
-	}
-
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", h.Port),
-		Handler:      mux,
+		Handler:      h.Handler,
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 10 * time.Second,
 		IdleTimeout:  120 * time.Second,
